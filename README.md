@@ -22,8 +22,9 @@ git submodule update --init
 
 After downloading the dataset and the weights, we can run the following command to detect objects with the YOLO model:
 ```bash
-docker compose run yolov3 python yolov3/detect.py --source datasets/aquarium/test/images/ --weights weights/yolov3_aquarium.pt ----project yolov3_aquarium --name detections
+python yolov3/detect.py --source datasets/aquarium/test/images/ --weights weights/yolov3_aquarium.pt --project yolov3_aquarium --name detections
 ```
+
 The output of the command is a folder named `yolov3_aquarium/detections`, which contains the detections of the test images.
 
 ## Training

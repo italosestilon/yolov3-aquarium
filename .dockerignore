@@ -1,0 +1,6 @@
+# data
+datasets
+runs
+
+# python
+.mypy*

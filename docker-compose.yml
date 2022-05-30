@@ -1,0 +1,90 @@
+version: '3'
+services:
+    yolov3:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/experiment/
+        ipc: host
+        shm_size: "10gb"
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities: [ gpu ]
+        working_dir: /experiment
+
+    train:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/experiment/
+        ipc: host
+        shm_size: "10gb"
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities: [ gpu ]
+        working_dir: /experiment
+        command: python yolov3/train.py --img 640 --batch 16 --epochs 300 --data data/aquarium.yaml --weights yolov3.pt --project runs/aquarium
+
+    detect:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/experiment/
+        ipc: host
+        shm_size: "10gb"
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities: [ gpu ]
+        working_dir: /experiment
+        command: python yolov3/detect.py --source datasets/aquarium/test/images/ --weights weights/yolov3_aquarium.pt --project yolov3_aquarium --name detections
+
+    val:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/experiment/
+        ipc: host
+        shm_size: "10gb"
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities: [ gpu ]
+        working_dir: /experiment
+        command: python yolov3/val.py --img 640 --batch 16 --data data/aquarium.yaml --weights weights/yolov3_aquarium.pt --project runs/aquarium-val
+
+    test:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./:/experiment/
+        ipc: host
+        shm_size: "10gb"
+        deploy:
+            resources:
+                reservations:
+                    devices:
+                        - driver: nvidia
+                          count: all
+                          capabilities: [ gpu ]
+        working_dir: /experiment
+        command: python yolov3/val.py --img 640 --batch 16 --data data/aquarium.yaml --weights weights/yolov3_aquarium.pt --task test --project runs/aquarium-test

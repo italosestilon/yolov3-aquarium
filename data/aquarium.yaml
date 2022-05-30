@@ -1,0 +1,6 @@
+train: datasets/aquarium/train/images
+val: datasets/aquarium/valid/images
+test: datasets/aquarium/test/images
+
+nc: 7
+names: ['fish', 'jellyfish', 'penguin', 'puffin', 'shark', 'starfish', 'stingray']
