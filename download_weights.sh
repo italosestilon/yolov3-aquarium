@@ -1,0 +1,3 @@
+# https://drive.google.com/file/d/1liQjpz5O28Z7kATIa2vbQObCkf6v525l/view?usp=sharing
+mkdir -p weights
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1liQjpz5O28Z7kATIa2vbQObCkf6v525l' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1liQjpz5O28Z7kATIa2vbQObCkf6v525l" -O weights/yolov3_aquarium.pt && rm -rf /tmp/cookies.txt
